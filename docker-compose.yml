@@ -186,8 +186,10 @@ services:
       - flow-api
     labels:
       # HTTP Basic Auth for https://peerdb.skladway.com (user: admin)
-      # Hash generated with: htpasswd -nbB admin '<password>'  ($ doubled for compose)
-      - "traefik.http.middlewares.peerdb-auth.basicauth.users=admin:$$2y$$05$$l.7Xm3S40n1kjpoNS4vmAOMqq/bkQeHmqEKyra8KGqeAHeO78FmrS"
+      # Hash generated with: htpasswd -nbB admin '<password>'
+      # NOTE: single '$' on purpose — Coolify escapes '$'->'$$' when generating
+      # the runtime compose, so do not double them here.
+      - "traefik.http.middlewares.peerdb-auth.basicauth.users=admin:$2y$05$l.7Xm3S40n1kjpoNS4vmAOMqq/bkQeHmqEKyra8KGqeAHeO78FmrS"
       - "traefik.http.routers.https-0-irsafxp5ew9js6k5tqa4j0zd-peerdb-ui.middlewares=gzip,peerdb-auth"
 
   minio:
