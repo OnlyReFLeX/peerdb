@@ -130,7 +130,11 @@ services:
       - "host.docker.internal:host-gateway"
     depends_on:
       temporal-admin-tools:
-        condition: service_healthy
+        # service_started (not service_healthy): the admin-tools tctl healthcheck
+        # flaps during temporal's first-boot setup and was failing whole deploys.
+        # The flow workers retry their temporal connection internally, so we only
+        # need the container started, not healthy.
+        condition: service_started
 
   flow-snapshot-worker:
     container_name: flow-snapshot-worker
@@ -140,7 +144,11 @@ services:
       <<: [*catalog-config, *flow-worker-env, *minio-config]
     depends_on:
       temporal-admin-tools:
-        condition: service_healthy
+        # service_started (not service_healthy): the admin-tools tctl healthcheck
+        # flaps during temporal's first-boot setup and was failing whole deploys.
+        # The flow workers retry their temporal connection internally, so we only
+        # need the container started, not healthy.
+        condition: service_started
 
   flow-worker:
     container_name: flow-worker
@@ -152,7 +160,11 @@ services:
       - "host.docker.internal:host-gateway"
     depends_on:
       temporal-admin-tools:
-        condition: service_healthy
+        # service_started (not service_healthy): the admin-tools tctl healthcheck
+        # flaps during temporal's first-boot setup and was failing whole deploys.
+        # The flow workers retry their temporal connection internally, so we only
+        # need the container started, not healthy.
+        condition: service_started
 
   peerdb:
     container_name: peerdb-server
