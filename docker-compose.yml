@@ -93,9 +93,10 @@ services:
     entrypoint: /etc/temporal/entrypoint.sh
     healthcheck:
       test: ["CMD", "tctl", "workflow", "list"]
-      interval: 1s
+      interval: 5s
       timeout: 5s
       retries: 30
+      start_period: 90s
     volumes:
       - ./scripts/mirror-name-search.sh:/etc/temporal/entrypoint.sh
 
@@ -183,6 +184,11 @@ services:
       PEERDB_EXPERIMENTAL_ENABLE_SCRIPTING: true
     depends_on:
       - flow-api
+    labels:
+      # HTTP Basic Auth for https://peerdb.skladway.com (user: admin)
+      # Hash generated with: htpasswd -nbB admin '<password>'  ($ doubled for compose)
+      - "traefik.http.middlewares.peerdb-auth.basicauth.users=admin:$$2y$$05$$l.7Xm3S40n1kjpoNS4vmAOMqq/bkQeHmqEKyra8KGqeAHeO78FmrS"
+      - "traefik.http.routers.https-0-irsafxp5ew9js6k5tqa4j0zd-peerdb-ui.middlewares=gzip,peerdb-auth"
 
   minio:
     image: minio/minio:latest@sha256:14cea493d9a34af32f524e538b8346cf79f3321eff8e708c1e2960462bd8936e
