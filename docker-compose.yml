@@ -121,7 +121,7 @@ services:
       - 8113:8113
     environment:
       <<: [*catalog-config, *flow-worker-env, *minio-config]
-      PEERDB_ALLOWED_TARGETS:
+      PEERDB_ALLOWED_TARGETS: ""
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
@@ -157,7 +157,7 @@ services:
     restart: unless-stopped
     environment:
       <<: *catalog-config
-      PEERDB_PASSWORD:
+      PEERDB_PASSWORD: ""
       PEERDB_FLOW_SERVER_ADDRESS: grpc://flow-api:8112
       RUST_LOG: info
       RUST_BACKTRACE: 1
