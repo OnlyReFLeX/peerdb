@@ -209,6 +209,13 @@ services:
 
   minio:
     image: minio/minio:latest@sha256:14cea493d9a34af32f524e538b8346cf79f3321eff8e708c1e2960462bd8936e
+    # ponytail: minio/minio was deleted from Docker Hub (and quay is gated), no
+    # registry serves this digest anymore. The image lives only in hosktey's local
+    # docker cache (backed up at /root/image-backups/minio-minio-14cea493.tar.gz).
+    # pull_policy: never keeps Coolify's `compose pull` from failing on it.
+    # Upgrade path: migrate to a maintained S3 image (e.g. MinIO's current distro
+    # or a drop-in) and drop this line.
+    pull_policy: never
     restart: unless-stopped
     volumes:
       - minio-data:/data
