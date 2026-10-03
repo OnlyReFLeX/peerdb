@@ -204,7 +204,7 @@ services:
       # Hash generated with: htpasswd -nbB admin '<password>'
       # NOTE: single '$' on purpose — Coolify escapes '$'->'$$' when generating
       # the runtime compose, so do not double them here.
-      - "traefik.http.middlewares.peerdb-auth.basicauth.users=admin:$2y$05$l.7Xm3S40n1kjpoNS4vmAOMqq/bkQeHmqEKyra8KGqeAHeO78FmrS"
+      - "traefik.http.middlewares.peerdb-auth.basicauth.users=admin:$2y$05$A0y7rpsuEf6g3mKIK1yite6veWt8UsAgjTR.T8fvsi8FE2oNX1BvO"
       - "traefik.http.routers.https-0-irsafxp5ew9js6k5tqa4j0zd-peerdb-ui.middlewares=gzip,peerdb-auth"
 
   minio:
